@@ -21,6 +21,14 @@ minetest.register_entity("ufo_ship:ufo", {
     on_activate = function(self, staticdata, dtime_s)
         self.object:set_rotation(vector.new(ufo_ship.deg_to_rad(ufo_ship.level_ship_offset), 0, 0))
     end,
+    on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
+        if not self.driver then
+            minetest.add_item(self.object:get_pos(), "ufo_ship:ufo")
+            self.object:remove()
+        else
+            return true --dont break when someone is in it
+        end
+    end,
     on_rightclick = function(self, clicker)
         if not clicker or not clicker:is_player() then return end
 
@@ -136,5 +144,17 @@ minetest.register_entity("ufo_ship:ufo", {
             vel.z = vel.z*ufo_ship.slow_factor
             self.object:setvelocity(vel)
         end
+    end,
+})
+
+minetest.register_craftitem("ufo_ship:ufo", {
+    description = "ufo ship",
+    inventory_image = "ufo_ship_ship_icon.png",
+    on_place = function(itemstack, placer, pointed_thing)
+        if pointed_thing.type ~= "node" then return end
+        local pos = pointed_thing.under
+        pos.y = pos.y+1
+        minetest.add_entity(pos, "ufo_ship:ufo")
+        --TODO: take item if in survival
     end,
 })
