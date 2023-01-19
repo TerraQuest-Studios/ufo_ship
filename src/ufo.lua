@@ -147,7 +147,10 @@ minetest.register_entity("ufo_ship:ufo", {
                     if ent then
                         local currot = ent:get_rotation()
                         local shiprot = self.object:get_rotation()
-                        local evel = vector.multiply(minetest.yaw_to_dir(self.object:get_yaw()), -(ufo_ship.max_speed*1.5))
+                        local evel = vector.multiply(
+                            minetest.yaw_to_dir(self.object:get_yaw()),
+                            -(ufo_ship.max_speed*1.5)
+                        )
                         ent:set_rotation(
                             vector.new(
                                 currot.x,
