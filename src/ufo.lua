@@ -32,6 +32,7 @@ minetest.register_entity("ufo_ship:ufo", {
             player_api.player_attached[clicker:get_player_name()] = true
             player_api.set_animation(clicker, "sit", 0)
             clicker:set_local_animation({}, {}, {}, {}, 1) --stupid client side rubbish animations should burn
+            self.reset_sit = true
             clicker:set_properties({
                 eye_height = 1.25
             })
@@ -59,6 +60,14 @@ minetest.register_entity("ufo_ship:ufo", {
             end
             local controls = driver:get_player_control()
             local vel = self.object:get_velocity()
+
+            if self.reset_sit then
+                --this exists because the first time a player clicks,
+                --it will take an attach and dettach to start working....
+                player_api.set_animation(driver, "sit", 0)
+                driver:set_local_animation({}, {}, {}, {}, 1) --stupid client side rubbish animations should burn\
+                self.reset_sit = nil
+            end
 
             --handle controls
             if controls.up then --add speed when on the trottle
