@@ -5,6 +5,8 @@ minetest.register_entity("ufo_ship:ufo", {
         visual_size = vector.new(10, 10, 10),
         textures = {"ufo_ship_ship.png"},
         physical = true,
+        collisionbox = {-0.5, 0.25, -0.5, 0.5, 1.5, 0.5},
+        selectionbox = {-0.5, 0.25, -0.5, 0.5, 1.5, 0.5, rotate = true},
     },
     on_activate = function(self, staticdata, dtime_s)
         self.object:set_rotation(vector.new(ufo_ship.deg_to_rad(ufo_ship.level_ship_offset), 0, 0))
