@@ -26,12 +26,12 @@ minetest.register_entity("ufo_ship:ufo", {
     on_rightclick = function(self, clicker)
         if not clicker or not clicker:is_player() then return end
 
-        --TODO: sometimes player is plain stupid and doesnt sit player, figure out why
         if not self.driver then
             clicker:set_attach(self.object, "", vector.new(0,0.5,0.25), vector.new(-ufo_ship.level_ship_offset,180,0))
             clicker:set_properties({visual_size = vector.new(0.075,0.075,0.075)})
             player_api.player_attached[clicker:get_player_name()] = true
             player_api.set_animation(clicker, "sit", 0)
+            clicker:set_local_animation({}, {}, {}, {}, 1) --stupid client side rubbish animations should burn
             clicker:set_properties({
                 eye_height = 1.25
             })
