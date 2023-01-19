@@ -8,6 +8,12 @@ minetest.register_entity("ufo_ship:ufo", {
     },
     on_activate = function(self, staticdata, dtime_s)
         self.object:set_rotation(vector.new(ufo_ship.deg_to_rad(ufo_ship.level_ship_offset), 0, 0))
+
+        self.laser = {
+            offset = 0.5,
+            default_ttl = 0.25,
+        }
+        self.laser.ttl = self.laser.default_ttl --start ttl
     end,
     on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
         if not self.driver then
@@ -113,6 +119,36 @@ minetest.register_entity("ufo_ship:ufo", {
                         0
                     )
                 )
+            end
+
+            --lasers
+            if controls.aux1 and ufo_ship.experimental_mode then
+                --handle timing
+                self.laser.ttl = self.laser.ttl - dtime
+                if(self.laser.ttl < 0) then
+                    --reset timing and flip to other side
+                    self.laser.ttl = self.laser.default_ttl
+                    self.laser.offset = self.laser.offset * -1
+
+                    --shoot
+                    local lpos = self.object:get_pos()
+                    lpos.y = lpos.y + 0.3
+                    lpos.x = lpos.x + self.laser.offset
+                    local ent = minetest.add_entity(lpos, "ufo_ship:laser_bolt")
+                    if ent then
+                        local currot = ent:get_rotation()
+                        local shiprot = self.object:get_rotation()
+                        local evel = vector.multiply(minetest.yaw_to_dir(self.object:get_yaw()), -(ufo_ship.max_speed*1.5))
+                        ent:set_rotation(
+                            vector.new(
+                                currot.x,
+                                shiprot.y + ufo_ship.deg_to_rad(90),
+                                0
+                            )
+                        )
+                        ent:set_velocity(evel)
+                    end
+                end
             end
 
             --speed lock
