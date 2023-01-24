@@ -133,6 +133,7 @@ minetest.register_entity("ufo_ship:ufo", {
             end
 
             --lasers
+            --TODO: limit this so its not abused
             if controls.aux1 and ufo_ship.experimental_mode then
                 --handle timing
                 self.laser.ttl = self.laser.ttl - dtime
