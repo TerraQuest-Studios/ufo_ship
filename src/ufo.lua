@@ -42,7 +42,7 @@ minetest.register_entity("ufo_ship:ufo", {
             self.driver = clicker:get_player_name()
         elseif self.driver == clicker:get_player_name() then
             clicker:set_detach()
-            xcompat.player.player_attached[clicker:get_player_name()] = nil
+            xcompat.player.player_attached[clicker:get_player_name()] = false
             clicker:set_eye_offset(vector.new(0,0,0))
             clicker:set_properties({visual_size = vector.new(1,1,1)})
             self.driver = nil
