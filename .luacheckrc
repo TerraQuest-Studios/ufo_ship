@@ -7,7 +7,7 @@ globals = {
     "minetest", "core",
 
     --mod provided
-    "ufo_ship", "player_api",
+    "ufo_ship", "xcompat",
 }
 
 read_globals = {

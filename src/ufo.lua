@@ -31,8 +31,8 @@ minetest.register_entity("ufo_ship:ufo", {
         if not self.driver then
             clicker:set_attach(self.object, "", vector.new(0,0.5,0.25), vector.new(-ufo_ship.level_ship_offset,180,0))
             clicker:set_properties({visual_size = vector.new(0.075,0.075,0.075)})
-            player_api.player_attached[clicker:get_player_name()] = true
-            player_api.set_animation(clicker, "sit", 0)
+            xcompat.player.player_attached[clicker:get_player_name()] = true
+            xcompat.player.set_animation(clicker, "sit", 0)
             clicker:set_local_animation({}, {}, {}, {}, 1) --stupid client side rubbish animations should burn
             self.reset_sit = true
             clicker:set_properties({
@@ -42,7 +42,7 @@ minetest.register_entity("ufo_ship:ufo", {
             self.driver = clicker:get_player_name()
         elseif self.driver == clicker:get_player_name() then
             clicker:set_detach()
-            player_api.player_attached[clicker:get_player_name()] = nil
+            xcompat.player.player_attached[clicker:get_player_name()] = false
             clicker:set_eye_offset(vector.new(0,0,0))
             clicker:set_properties({visual_size = vector.new(1,1,1)})
             self.driver = nil
@@ -66,7 +66,7 @@ minetest.register_entity("ufo_ship:ufo", {
             if self.reset_sit then
                 --this exists because the first time a player clicks,
                 --it will take an attach and dettach to start working....
-                player_api.set_animation(driver, "sit", 0)
+                xcompat.player.set_animation(driver, "sit", 0)
                 driver:set_local_animation({}, {}, {}, {}, 1) --stupid client side rubbish animations should burn\
                 self.reset_sit = nil
             end
