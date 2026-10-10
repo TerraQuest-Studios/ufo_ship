@@ -1,0 +1,12 @@
+name: flint
+
+on: [push, pull_request]
+
+jobs:
+  flint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: luanti-org/flint@master
+        with:
+          command: lint
