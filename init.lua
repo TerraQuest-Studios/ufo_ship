@@ -11,6 +11,6 @@ function ufo_ship.deg_to_rad(x)
     return x * math.pi/180
 end
 
-dofile(minetest.get_modpath("ufo_ship") .. "/src/functions.lua")
-dofile(minetest.get_modpath("ufo_ship") .. "/src/laser_bolt.lua")
-dofile(minetest.get_modpath("ufo_ship") .. "/src/ufo.lua")
+dofile(core.get_modpath("ufo_ship") .. "/src/functions.lua")
+dofile(core.get_modpath("ufo_ship") .. "/src/laser_bolt.lua")
+dofile(core.get_modpath("ufo_ship") .. "/src/ufo.lua")

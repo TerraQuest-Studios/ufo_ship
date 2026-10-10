@@ -4,7 +4,7 @@ allow_defined_top = true
 exclude_files = {".luacheckrc"}
 
 globals = {
-    "minetest", "core",
+    "core",
 
     --mod provided
     "ufo_ship", "xcompat",

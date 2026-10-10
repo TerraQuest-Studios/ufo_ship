@@ -1,4 +1,4 @@
-minetest.register_entity("ufo_ship:ufo", {
+core.register_entity("ufo_ship:ufo", {
     initial_properties = {
         visual = "mesh",
         mesh = "ufo_ship_ship.obj",
@@ -19,7 +19,7 @@ minetest.register_entity("ufo_ship:ufo", {
     end,
     on_punch = function(self, puncher, time_from_last_punch, tool_capabilities, dir, damage)
         if not self.driver then
-            minetest.add_item(self.object:get_pos(), "ufo_ship:ufo")
+            core.add_item(self.object:get_pos(), "ufo_ship:ufo")
             self.object:remove()
         else
             return true --dont break when someone is in it
@@ -55,7 +55,7 @@ minetest.register_entity("ufo_ship:ufo", {
             * slow down with down key
         ]]
         if self.driver then
-            local driver = minetest.get_player_by_name(self.driver)
+            local driver = core.get_player_by_name(self.driver)
             if not driver then
                 self.driver = nil
                 return
@@ -146,12 +146,12 @@ minetest.register_entity("ufo_ship:ufo", {
                     local lpos = self.object:get_pos()
                     lpos.y = lpos.y + 0.3
                     lpos.x = lpos.x + self.laser.offset
-                    local ent = minetest.add_entity(lpos, "ufo_ship:laser_bolt")
+                    local ent = core.add_entity(lpos, "ufo_ship:laser_bolt")
                     if ent then
                         local currot = ent:get_rotation()
                         local shiprot = self.object:get_rotation()
                         local evel = vector.multiply(
-                            minetest.yaw_to_dir(self.object:get_yaw()),
+                            core.yaw_to_dir(self.object:get_yaw()),
                             -(ufo_ship.max_speed*1.5)
                         )
                         ent:set_rotation(
@@ -186,14 +186,14 @@ minetest.register_entity("ufo_ship:ufo", {
     end,
 })
 
-minetest.register_craftitem("ufo_ship:ufo", {
+core.register_craftitem("ufo_ship:ufo", {
     description = "ufo ship",
     inventory_image = "ufo_ship_ship_icon.png",
     on_place = function(itemstack, placer, pointed_thing)
         if pointed_thing.type ~= "node" then return end
         local pos = pointed_thing.under
         pos.y = pos.y+1
-        minetest.add_entity(pos, "ufo_ship:ufo")
+        core.add_entity(pos, "ufo_ship:ufo")
         --TODO: take item if in survival
     end,
 })
